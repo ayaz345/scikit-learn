@@ -30,6 +30,7 @@ of the latent structured data of the Wikipedia content.
 
 """
 
+
 # Author: Olivier Grisel <olivier.grisel@ensta.org>
 # License: BSD 3 clause
 
@@ -61,7 +62,7 @@ resources = [
 
 for url, filename in resources:
     if not os.path.exists(filename):
-        print("Downloading data from '%s', please wait..." % url)
+        print(f"Downloading data from '{url}', please wait...")
         opener = urlopen(url)
         with open(filename, "wb") as f:
             f.write(opener.read())
@@ -93,7 +94,7 @@ def get_redirects(redirects_filename):
     for l, line in enumerate(BZ2File(redirects_filename)):
         split = line.split()
         if len(split) != 4:
-            print("ignoring malformed line: " + line)
+            print(f"ignoring malformed line: {line}")
             continue
         redirects[short_name(split[0])] = short_name(split[2])
         if l % 1000000 == 0:
@@ -135,12 +136,12 @@ def get_adjacency_matrix(redirects_filename, page_links_filename, limit=None):
     redirects = get_redirects(redirects_filename)
 
     print("Computing the integer index map")
-    index_map = dict()
-    links = list()
+    index_map = {}
+    links = []
     for l, line in enumerate(BZ2File(page_links_filename)):
         split = line.split()
         if len(split) != 4:
-            print("ignoring malformed line: " + line)
+            print(f"ignoring malformed line: {line}")
             continue
         i = index(redirects, index_map, short_name(split[0]))
         j = index(redirects, index_map, short_name(split[2]))

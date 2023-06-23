@@ -114,13 +114,8 @@ def one_run(n_samples):
         verbose=0,
     )
     loss = args.loss
-    if args.problem == "classification":
-        if loss == "default":
-            loss = "log_loss"
-    else:
-        # regression
-        if loss == "default":
-            loss = "squared_error"
+    if loss == "default":
+        loss = "log_loss" if args.problem == "classification" else "squared_error"
     est.set_params(loss=loss)
     est.fit(X_train, y_train, sample_weight=sample_weight_train)
     sklearn_fit_duration = time() - tic

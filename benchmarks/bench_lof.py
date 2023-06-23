@@ -17,6 +17,7 @@ is only caused by the random selection of anomalies in the SA dataset.
 
 """
 
+
 from time import time
 
 import matplotlib.pyplot as plt
@@ -83,7 +84,7 @@ for dataset_name in datasets:
         X = np.c_[X[:, :1], x1, x2, x3, X[:, 4:]]
         y = (y != b"normal.").astype(int)
 
-    if dataset_name == "http" or dataset_name == "smtp":
+    if dataset_name in ["http", "smtp"]:
         y = (y != b"normal.").astype(int)
 
     X = X.astype(float)

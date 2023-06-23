@@ -1,5 +1,6 @@
 """Checks that dist/* contains the number of wheels built from the
 .github/workflows/wheels.yml config."""
+
 import sys
 from pathlib import Path
 
@@ -10,11 +11,7 @@ with gh_wheel_path.open("r") as f:
     wheel_config = yaml.safe_load(f)
 
 build_matrix = wheel_config["jobs"]["build_wheels"]["strategy"]["matrix"]["include"]
-n_wheels = len(build_matrix)
-
-# plus one more for the sdist
-n_wheels += 1
-
+n_wheels = len(build_matrix) + 1
 # arm64 builds from cirrus
 cirrus_path = Path.cwd() / "build_tools" / "cirrus" / "arm_wheel.yml"
 with cirrus_path.open("r") as f:
